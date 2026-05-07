@@ -67,7 +67,7 @@ test('get started link', async ({ page }) => {
 
 </details>
 
-MSの過去のテスト用製品の知見が濃縮されたような
+MSの過去のテスト用製品の知見が濃縮されたような感じ。
 
 ## First touch で気になった件の調査
 
