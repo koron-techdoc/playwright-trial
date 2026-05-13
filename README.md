@@ -164,3 +164,61 @@ AI (LLM) と Playwright との協調方法を調べる。
 -   テストのメンテ・管理が楽
     -   UIでスクショを取りつつ実行など
 -   AIとの協調を前程にしている
+
+## Second Touch
+
+### Playwright自身が提供するAI連携
+
+第一歩として [公式サイト](https://playwright.dev/) から、公式が提供しているAI機能を確認。
+
+-   [MCP](https://playwright.dev/mcp/introduction) -
+    Playwright が提供するブラウザ自動化機能をAIに対してい提供するアダプター。
+    視覚モデルは無くても良い。
+    エンジニアと対話、伴走する利用方法を想定 (Headed)。
+    自立エージェントは CLI を使う。
+-   [CLI](https://playwright.dev/agent-cli/introduction) - 
+    コーディングエージェント向けにブラウザ自動化機能を提供する。
+    より大規模向け。
+    自立型で Headless 動作。
+    トークン効率が良い。
+    エージェントにとっての「スキル」となる。
+-   [Playwright Test Agents](https://playwright.dev/docs/test-agents) -
+    MCPを使って、テストの計画、実装、メンテナンス(修正)を担う3種のエージェント: planner, generator, and healer が提供される。
+
+MCPは Playwright Test Agents以外だと、CursorやVS Code (GitHub Copilot)との直接連携で使われる。
+他にも諸々を自作する場合に採用できる。
+
+高いけど、賢いMCP。安いけど、賢くはないCLI。AgentsはMCPを使って、テストの全工程を自動化、もしくはAIによる補助をする。
+
+### 他のブラウザ操作系AIエージェントとの比較
+
+[Computer-useとBrowser-useとPlaywright-MCPを比較](https://zenn.dev/headwaters/articles/7f0717b61848c3) -
+テストとは違った観点で、「AIによるブラウザ操作の自動化」を検討。利用モデルはGPT 4.1。
+トークン量の少なさから browser-use が使いやすそう。
+裏ではどれもPlaywrightを使っているように見えるが、トークン量にこれだけの差が生じる理由が不明。
+画像を読んでるか否からしい。
+画像≒ブラウザのスクリーンショットを見て、操作を適用させようとすると、どうしても高くつくと言うこと。
+browser-use は DOM だけ見てる感じ。
+
+[AIエージェントによるブラウザ自動化ツール3種比較](https://www.ytyng.com/blog/ai-browser-automation-tools-comparison-2026) -
+AIによる比較レポートw AIがAIエージェントに指示を出し、動作を比較している。
+トークン効率から agent-browser (Vecel Labs) を推奨とし、
+不安定さから Claude in Chrome を非推奨としてる。
+
+Playwright Test Agents はトークン使用量が増える傾向にある。
+増大の理由は、DOMの大きさ(長さ)、スクリーンショットの利用、試行錯誤。
+Test Agents にプロンプトにてPlaywright CLIを使わせる手も有効そう。
+
+### ここまでのまとめ #2
+
+-   Playwright 自身はコードによるブラウザ操作の自動化フレームワークである
+-   Playwright を AI に操作させる口として MCP と CLI が用意されている
+    -   これらとAIエージェントを連携させることで、AIにブラウザ操作を任せることができる
+    -   一長一短だが、AIにより柔軟に判断させたい場合はMCPが、大量に操作したい場合はCLIが向く
+-   Playwright Test Agents はMCPもしくはCLIを用いて、テスト工程全体の補助をする
+    -   テスト全体を設計するプランナー
+    -   テストコードを生成するジェネレーター
+    -   テストコードをメンテ・修正するのヘルパー
+
+    利用できるモデルは Claude (Anthropic), VS Code Copilot, OpenCode に限定されている。
+    OpenCode はローカルを含めいろんなプロバイダを使えるので、それで良いとなりそう。
