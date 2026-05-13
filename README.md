@@ -220,5 +220,5 @@ Test Agents にプロンプトにてPlaywright CLIを使わせる手も有効そ
     -   テストコードを生成するジェネレーター
     -   テストコードをメンテ・修正するのヘルパー
 
-    利用できるモデルは Claude (Anthropic), VS Code Copilot, OpenCode に限定されている。
+    利用できるモデルは Claude (Anthropic), VS Code Copilot, [OpenCode](https://opencode.ai/ja) に限定されている。
     OpenCode はローカルを含めいろんなプロバイダを使えるので、それで良いとなりそう。
