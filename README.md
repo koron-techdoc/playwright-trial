@@ -300,3 +300,25 @@ Opus 4.7 は Sonnet 4.6 と比べ、トークン単価3倍、トークン使用�
 
 -   なんか慎重そう
 -   1つ1つのタスクが遅い&トークン多く、トークン使用率0%からテスト書かせてみたら82%まで埋まった
+
+## Forth Touch
+
+[spring-projects/spring-petclinic](https://github.com/spring-projects/spring-petclinic) も例題に Playwright のテストコード生成を検証した。
+
+実装仮定:
+
+-   [Claude + Sonnet 4.6](https://github.com/koron/spring-petclinic/compare/main...koron:spring-petclinic:playwright-trial-sonet4.6)
+
+    完成までにセッションの43%のトークンを使用した。
+
+-   [opencode + Qwen 3.6 35B A3B MTP](https://github.com/koron/spring-petclinic/compare/main...koron:spring-petclinic:playwright-trial-qwen3.6)
+
+
+どちらもフルオート(完全自立)ではないが、
+opencodeのほうが自立性が高い。
+
+opencodeはテスト実行、結果確認、修正のループを回す。
+Claudeは回さないけど、たぶん厳し目のサウンドボックス設定による。
+
+opencodeはテスト計画策定時に、実際にWeb画面にアクセスしていそう。
+Claudeはアクセスしてなさそう、たぶん厳し目のサウンドボックス設定による。
